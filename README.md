@@ -2,6 +2,7 @@
 ## Overview 
 #### The code in this repository is connected to the (yet to be published) paper 'Scalable Deep Reinforcement Learning Based UAV Obstacle Avoidance using Edge AI'.
 #### Follow the bellow steps to get a Gazebo/PX4/OpenAI Gym based SITL Drone (modeled on the UVify IFO-S drone: https://github.com/decargroup/ifo_gazebo) to employ a Pytorch D3QN based algorithm for obstacle avoidance/autonomous navigation.
+#### The bellow steps are for Ubuntu 18.04 and ROS Melodic, we also got the SITL drone working with Ubuntu 20.04 and ROS Noetic (instructions for this will be added before the end of April)
 ## Installation
 ### Step 1 - Ensure you have Ubuntu 18.04 (e.g. through a virtual machine)
 ### Step 2 - Upgrade to python 3.7 by executing the following commands one at a time (based off: https://cloudbytes.dev/snippets/upgrade-python-to-latest-version-on-ubuntu-linux):
