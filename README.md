@@ -163,7 +163,6 @@ echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.ba
 cd ~/catkin_ws
 source ~/.bashrc
 roslaunch ifo_gazebo ifo_empty_world_1.launch
-#cntrl+c 
 ```
 ### Step 6 - Get the ROS package that allows a user to communicate with PX4 autopilot using MAVROS by executing the following commands (based off https://github.com/troiwill/mavros-px4-vehicle):
 ```
