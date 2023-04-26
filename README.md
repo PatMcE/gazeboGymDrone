@@ -97,7 +97,7 @@ catkin build
 cd ..
 bash ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot/Tools/setup/ubuntu.sh
 ```
-#### Step 5b - Restart or logout and execute the following commands:
+#### Step 5b - Relogin or reboot and execute the following commands:
 ```
 sudo apt install python3-pip
 ```
