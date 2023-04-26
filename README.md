@@ -106,7 +106,8 @@ sudo apt install python3-pip
 pip3 install pyulog
 pip3 install future
 sudo apt upgrade -y
-
+```
+```
 cd ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot
 make distclean
 
