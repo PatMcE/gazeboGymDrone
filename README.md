@@ -152,6 +152,7 @@ nano ubuntu_sim_ros_noetic.sh
 # fill ubuntu_sim_ros_noetic.sh with the contents of https://gist.githubusercontent.com/ekaktusz/a1065a2a452567cb04b919b20fdb57c4/raw/8be54ed561db7e3a2ce61c9c7b1fb9fec72501f4/ubuntu_sim_ros_noetic.sh
 # exit and save ubuntu_sim_ros_noetic.sh
 bash ubuntu_sim_ros_noetic.sh
+# answer 'y' for any prompts
 ```
 ### ------------------------------------
 ### ---------- Ubuntu 18.04 and Ubuntu 20.04 ----------
