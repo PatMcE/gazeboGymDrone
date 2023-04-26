@@ -219,7 +219,7 @@ mkdir {models,scores,times,plots,worlds}
 cd ~/catkin_ws/src/mavros-px4-vehicle/worlds
 touch world1.world
 ```
-##### Step 8diii - Copy and past the contents of 'world1.world' in this repo into the file with the same name on your computer with Sublime Text (and save)
+##### Step 8diii - Copy and paste the contents of 'world1.world' in this repo into the file with the same name on your computer with Sublime Text (and save)
 
 ### Step 9 - Launch world and start training
 #### Step 9a - Run the bellow commands
