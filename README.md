@@ -149,10 +149,10 @@ bash ubuntu_sim_ros_melodic.sh
 ```
 cd ~
 nano ubuntu_sim_ros_noetic.sh
-# fill ubuntu_sim_ros_noetic.sh with the contents of https://gist.githubusercontent.com/ekaktusz/a1065a2a452567cb04b919b20fdb57c4/raw/8be54ed561db7e3a2ce61c9c7b1fb9fec72501f4/ubuntu_sim_ros_noetic.sh
-# exit and save ubuntu_sim_ros_noetic.sh
+#fill ubuntu_sim_ros_noetic.sh with the contents of https://gist.githubusercontent.com/ekaktusz/a1065a2a452567cb04b919b20fdb57c4/raw/8be54ed561db7e3a2ce61c9c7b1fb9fec72501f4/ubuntu_sim_ros_noetic.sh
+#exit and save ubuntu_sim_ros_noetic.sh
 bash ubuntu_sim_ros_noetic.sh
-# answer 'y' for any prompts
+#answer 'y' for any prompts
 ```
 ### ------------------------------------
 ### ---------- Ubuntu 18.04 and Ubuntu 20.04 ----------
@@ -163,6 +163,7 @@ echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.ba
 cd ~/catkin_ws
 source ~/.bashrc
 roslaunch ifo_gazebo ifo_empty_world_1.launch
+#cntrl+c 
 ```
 ### Step 6 - Get the ROS package that allows a user to communicate with PX4 autopilot using MAVROS by executing the following commands (based off https://github.com/troiwill/mavros-px4-vehicle):
 ```
