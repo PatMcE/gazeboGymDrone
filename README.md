@@ -2,10 +2,11 @@
 ## Overview 
 #### The code in this repository is connected to the (yet to be published) paper 'Scalable Deep Reinforcement Learning Based UAV Obstacle Avoidance using Edge AI'.
 #### Follow the bellow steps to get a Gazebo/PX4/OpenAI Gym based SITL Drone (modeled on the UVify IFO-S drone: https://github.com/decargroup/ifo_gazebo) to employ a Pytorch D3QN based algorithm for obstacle avoidance/autonomous navigation.
-#### The bellow steps are for Ubuntu 18.04 and ROS Melodic, we also got the SITL drone working with Ubuntu 20.04 and ROS Noetic (instructions for this will be added before the end of April)
+#### The bellow steps are for Ubuntu 18.04/ROS Melodic and Ubuntu 20.04/ROS Noetic. The paper used Ubuntu 18.04/ROS Melodic.
 ## Installation
-### Step 1 - Ensure you have Ubuntu 18.04 (e.g. through a virtual machine)
-### Step 2 - Upgrade to python 3.7 by executing the following commands one at a time (based off: https://cloudbytes.dev/snippets/upgrade-python-to-latest-version-on-ubuntu-linux):
+### Step 1 - Ensure you have Ubuntu 18.04 or Ubuntu 20.04 Virtual Machine (e.g. Oracle VM Virtualbox)
+### ---------- Ubuntu 18.04 ----------
+### Step 2a - Upgrade to python 3.7 by executing the following commands one at a time (based off: https://cloudbytes.dev/snippets/upgrade-python-to-latest-version-on-ubuntu-linux):
 ```
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update -y
@@ -26,7 +27,7 @@ sudo apt install curl -y
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 sudo python3.7 get-pip.py
 ```
-### Step 3 - Install ROS Melodic by executing the following commands one at a time (based off http://wiki.ros.org/melodic/Installation/Ubuntu):
+### Step 2b - Install ROS Melodic by executing the following commands one at a time (based off http://wiki.ros.org/melodic/Installation/Ubuntu):
 ```
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
@@ -35,7 +36,7 @@ sudo apt install ros-melodic-desktop-full -y
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
-### Step 4 - Do various installs by executing the following commands one at a time:
+### Step 3 - Do various installs by executing the following commands one at a time:
 ```
 sudo apt install python3-pip python3-all-dev python3-rospkg -y
 sudo apt install ros-melodic-desktop-full --fix-missing -y
@@ -45,7 +46,7 @@ sudo apt install git -y
 sudo apt upgrade libignition-math2 -y
 sudo snap install sublime-text --classic
 ```
-### Step 5 - Create a catkin workspace by executing the following commands (based off http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
+### Step 4 - Create a catkin workspace by executing the following commands (based off melodic tab at http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
 ```
 source /opt/ros/melodic/setup.bash
 mkdir -p ~/catkin_ws/src
@@ -54,6 +55,37 @@ catkin build
 source devel/setup.bash
 echo $ROS_PACKAGE_PATH
 ```
+### ----------------------------------
+### ---------- Ubuntu 20.04 ----------
+### Step 2 - Install ROS Noetic by executing the following commands one at a time (based off http://wiki.ros.org/noetic/Installation/Ubuntu):
+```
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt install curl
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+sudo apt update
+sudo apt install ros-noetic-desktop-full
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+### Step 3 - Do various installs by executing the following commands one at a time:
+```
+sudo apt update
+sudo apt-get install python3-catkin-tools -y
+sudo apt install git
+sudo snap install sublime-text --classic
+```
+### Step 4 - Create a catkin workspace by executing the following commands (based off noetic tab at http://wiki.ros.org/catkin/Tutorials/create_a_workspace):
+```
+source /opt/ros/noetic/setup.bash
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin build
+source devel/setup.bash
+echo $ROS_PACKAGE_PATH
+```
+### ----------------------------------
+### ---------- Ubuntu 18.04 and Ubuntu 20.04 ----------
+
 ### Step 5 - Get the Gazebo Model for the Uvify IFO-S (https://github.com/decargroup/ifo_gazebo):
 #### Step 5a - Execute the following commands:
 ```
@@ -183,3 +215,4 @@ roslaunch ifo_gazebo ifo_empty_world_1.launch
 source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
 ```
+### -----------------------------------------------
