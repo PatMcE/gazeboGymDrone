@@ -4,7 +4,7 @@
 #### Follow the bellow steps to get a Gazebo/PX4/OpenAI Gym based SITL Drone (modeled on the UVify IFO-S drone: https://github.com/decargroup/ifo_gazebo) to employ a Pytorch D3QN based algorithm for obstacle avoidance/autonomous navigation.
 #### The bellow steps are for Ubuntu 18.04/ROS Melodic and Ubuntu 20.04/ROS Noetic. The paper used Ubuntu 18.04/ROS Melodic.
 ## Installation
-### Step 1 - Ensure you have a Ubuntu 18.04 or Ubuntu 20.04 Virtual Machine (e.g. Oracle VM Virtualbox)
+### Step 1 - Ensure you have a Ubuntu 18.04 or Ubuntu 20.04 Virtual Machine (e.g. Oracle VM Virtualbox on laptop or Google Cloud VM instance)
 ### ---------- Ubuntu 18.04 ----------
 ### Step 2a - Upgrade to python 3.7 by executing the following commands one at a time (based off: https://cloudbytes.dev/snippets/upgrade-python-to-latest-version-on-ubuntu-linux):
 ```
