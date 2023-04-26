@@ -85,7 +85,6 @@ echo $ROS_PACKAGE_PATH
 ```
 ### ----------------------------------
 ### ---------- Ubuntu 18.04 and Ubuntu 20.04 ----------
-
 ### Step 5 - Get the Gazebo Model for the Uvify IFO-S (https://github.com/decargroup/ifo_gazebo):
 #### Step 5a - Execute the following commands:
 ```
@@ -130,7 +129,11 @@ git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git
 cd ~/catkin_ws
 catkin build
 #run catkin build again if previous catkin build returns with a warning
-
+```
+### ----------------------------------
+### ---------- Ubuntu 18.04 ----------
+#### Step 5c - execute more commands:
+```
 cd ~
 wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
 bash ubuntu_sim_ros_melodic.sh
@@ -140,6 +143,18 @@ sudo rosdep init
 rosdep update
 bash ubuntu_sim_ros_melodic.sh
 ```
+### ----------------------------------
+### ---------- Ubuntu 20.04 ----------
+#### Step 5c - execute more commands:
+```
+cd ~
+nano ubuntu_sim_ros_noetic.sh
+# fill with https://gist.githubusercontent.com/ekaktusz/a1065a2a452567cb04b919b20fdb57c4/raw/8be54ed561db7e3a2ce61c9c7b1fb9fec72501f4/ubuntu_sim_ros_noetic.sh
+bash ubuntu_sim_ros_noetic.sh
+```
+### ----------------------------------
+### ---------- Ubuntu 18.04 and Ubuntu 20.04 ----------
+#### Step 5d - execute more commands:
 ```
 echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 echo "source ~/catkin_ws/src/ifo_gazebo/setup_ifo_gazebo.bash suppress" >> ~/.bashrc
