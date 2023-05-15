@@ -15,7 +15,7 @@ sudo apt install ros-noetic-desktop-full -y
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
-### Step 3 - Do various installs by executing the following commands one at a time:
+### Step 3 - Execute the following commands one at a time:
 ```
 sudo apt update
 sudo apt-get install python3-catkin-tools -y
