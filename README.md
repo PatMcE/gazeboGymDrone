@@ -104,11 +104,10 @@ cd ~/catkin_ws
 catkin build
 source devel/setup.bash
 ```
-### Step 7 - Install opencv, scipy, gym and torch with bellow commands
+### Step 7 - Install scipy, gym and torch with bellow commands
 ```
-pip3 install opencv-python
 pip3 install scipy
-pip3 install gym==0.15.7
+pip3 install gym==0.21
 pip3 install torch
 ```
 ### Step 8 - Copy the files from this github repository into the appropriate places as outlined bellow
