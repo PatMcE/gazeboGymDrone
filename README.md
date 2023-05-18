@@ -151,7 +151,7 @@ cd ~/catkin_ws
 source ~/.bashrc
 roslaunch ifo_gazebo ifo_empty_world_1.launch
 ```
-#### Step 9b - Open another terminal tab and run the bellow command
+#### Step 9b - Open another terminal tab and run the bellow commands
 ```
 source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
