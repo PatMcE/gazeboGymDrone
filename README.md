@@ -130,7 +130,7 @@ cd ~/catkin_ws/src/mavros-px4-vehicle/scripts
 chmod +x *.py
 ```
 #### Step 8c - Replace 2 of your launch files
-##### Step 8ci - Using Sublime Text, navigate to '~/catkin_ws/src/ifo_gazebo/ifo_gazebo/launch/ifo_empty_world_1.launch' and replace the contents with the file in this repo with the same name (and save)
+##### Step 8ci - Using Sublime Text, navigate to '~/catkin_ws/src/ifo_gazebo/ifo_gazebo/launch/ifo_empty_world_1.launch' and replace the contents with the file in this repo with the same name (and save). At line 9, change world1.world to world2.world if you want to launch world2 instead of world1.
 ##### Step 8cii - Using Sublime Text, navigate to '~/catkin_ws/src/ifo_gazebo/ifo_gazebo/launch/ifo_spawn_single.launch' and replace the contents with the file in this repo with the same name (and save)
 #### Step 8d - Create a few folders and add two world files to one of them
 ##### Step 8di -  Create folders at '~/catkin_ws/src/mavros-px4-vehicle'
