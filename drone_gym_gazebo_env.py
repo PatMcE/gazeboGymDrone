@@ -5,6 +5,8 @@ This code uses code from from https://github.com/edowson/openai_ros and https://
 import gym
 from gym.utils import seeding
 from gym import spaces
+from gym.envs.registration import register
+
 import numpy as np
 import math
 import time
@@ -12,17 +14,16 @@ import rospy
 
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import PoseStamped, Point
-from gym.envs.registration import register
-timestep_limit_per_episode = 500
-
 from std_srvs.srv import Empty
-import cv2 as cv
-import sys
+
+from cv_bridge import CvBridge, CvBridgeError
+import cv2
 
 from mavros_px4_vehicle.px4_modes import PX4_MODE_OFFBOARD
 from mavros_px4_vehicle.px4_offboard_modes import SetPositionWithYawCmdBuilder
 from mavros_px4_vehicle.px4_vehicle import PX4Vehicle
 
+timestep_limit_per_episode = 500
 register(
 		id='DroneGymGazeboEnv-v0',
 		entry_point='drone_gym_gazebo_env:DroneGymGazeboEnv',
@@ -49,12 +50,12 @@ class DroneGymGazeboEnv(gym.Env):
 		self.start_point.y = 0.0
 		self.start_point.z = self.z
 		self.desired_point = Point()
-		self.desired_point.x = 30.0#10.0
+		self.desired_point.x = 10.0#30.0
 		self.desired_point.y = 0.0
 		self.desired_point.z = self.z
 
         #Set workspace limits:
-		self.work_space_x_max = 31.5
+		self.work_space_x_max = 11.5#31.5
 		self.work_space_x_min = -1.0
 		self.work_space_y_max = 3.1
 		self.work_space_y_min = -3.1
@@ -62,6 +63,7 @@ class DroneGymGazeboEnv(gym.Env):
 		self.work_space_z_min = -0.1
 
 		#Additional setup:
+		self.bridge = CvBridge()
 		self.seed()
 		self.episode_num = 0
 		self.cumulated_episode_reward = 0
@@ -165,8 +167,6 @@ class DroneGymGazeboEnv(gym.Env):
 		return init_time
 
 	def _set_action(self, action):
-		prev_pose = self.get_gt_pose()
-
 		if action == 0:
 			rospy.loginfo("> FORWARDS")
 			# Move forward at 1m/s for self.action_duration seconds
@@ -187,39 +187,22 @@ class DroneGymGazeboEnv(gym.Env):
 			start = self.left_or_right(1, -1)#-1 indicates move right (not left)
 			while self.action_duration > time.time() - start:
 				pass
-
-		return prev_pose
-
-	#From imgmsg_to_cv2() at https://github.com/ros-perception/vision_opencv/blob/rolling/cv_bridge/python/cv_bridge/core.py:
-	def depth_imgmsg_to_cv2(self, img_msg):#, desired_encoding='passthrough'):
-		'''im_msg.encoding of depth image = "32FC1" (single channel float 32 image)'''
-		#dtype, n_channels = self.encoding_to_dtype_with_channels(img_msg.encoding)
-		#dtype = np.dtype(dtype)
-		dtype = np.dtype('uint16')#('f8')
-		dtype = dtype.newbyteorder('>' if img_msg.is_bigendian else '<')
-
-		#Assuming n_channels = 1:
-		im = np.ndarray(shape=(img_msg.height, int(img_msg.step/dtype.itemsize)), dtype=dtype, buffer=img_msg.data)
-		im = np.ascontiguousarray(im[:img_msg.height, :img_msg.width])
-
-		# If the byte order is different between the message and the system.
-		if img_msg.is_bigendian == (sys.byteorder == 'little'):
-			im = im.byteswap().newbyteorder()
-
-		return im
+	def depth_imgmsg_to_cv2(self, img_msg):
+		try:
+			depth_im = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding='passthrough')
+		except CvBridgeError as e:
+			print(e)
+		return depth_im
 
 	def preprocess_image(self, image):
-		'''help from https://stackoverflow.com/questions/47751323/get-depth-image-in-grayscale-in-ros-with-imgmsg-to-cv2-python'''
-		cv_image = self.depth_imgmsg_to_cv2(image)
-		
-		# Resize to the desired size
-		cv_image_resized = cv.resize(cv_image, (self.one_image_shape[2], self.one_image_shape[1]), interpolation = cv.INTER_CUBIC)
-		
-		cv_image_reshaped = cv_image_resized.reshape((self.one_image_shape[1], self.one_image_shape[2], self.one_image_shape[0]))
+		#Convert to opencv format:
+		cv_image = self.depth_imgmsg_to_cv2(image)#480,640
 
-		cv_image_transposed = cv_image_reshaped.transpose(2, 0, 1)
+		#Resize, reshape:
+		cv_image_resized = cv2.resize(cv_image, (self.one_image_shape[2], self.one_image_shape[1]), interpolation = cv2.INTER_CUBIC)#36,48
+		cv_image_reshaped = cv_image_resized.reshape((self.one_image_shape[1], self.one_image_shape[2], self.one_image_shape[0]))#36,48,1
 
-		return cv_image_transposed
+		return cv_image_reshaped.transpose(2, 0, 1)#transpose to (channel,height,width) for pytorch (1,36,48)
 
 	def _get_obs(self):
 		image = self.get_front_camera_depth_image_raw()
