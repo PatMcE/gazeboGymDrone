@@ -42,7 +42,7 @@ class DroneGymGazeboEnv(gym.Env):
 		self.width = 48 #width want image to be after processing (original image = 640)
 		self.one_image_shape = (1,self.height,self.width) #(channels, height, width)
 		self.two_image_shape = (2,self.height,self.width) #using two images (and relative position coordinates) in state space
-		self.image_observation_space = gym.spaces.Box(low=0.0, high=1.0, shape=self.two_image_shape, dtype=np.float32)
+		self.image_observation_space = spaces.Box(low=0.0, high=1.0, shape=self.two_image_shape, dtype=np.float32)
 
         #Set starting and goal/desired point:
 		self.start_point = Point()
@@ -128,6 +128,7 @@ class DroneGymGazeboEnv(gym.Env):
 		self.front_camera_depth_image_raw = image
 
 	def _gt_pose_callback(self, data):
+		# ROS Callback function for the /mavros/local_position/pose topic
 		self.gt_pose = data
 
 	def get_front_camera_depth_image_raw(self):
@@ -144,8 +145,7 @@ class DroneGymGazeboEnv(gym.Env):
 		x_cmd = SetPositionWithYawCmdBuilder.build(x = x + round((speed),2), y = y, z = self.z)
 		self.drone.set_pose2d(x_cmd)
 
-		init_time = time.time()
-		return init_time
+		return time.time()
 
 	def left_or_right(self, speed, direction):#dir = 1 for left
 		gt_pose = self.get_gt_pose()        
@@ -155,8 +155,7 @@ class DroneGymGazeboEnv(gym.Env):
 		y_cmd = SetPositionWithYawCmdBuilder.build(x = x, y = y + round((direction*speed),2), z = self.z)
 		self.drone.set_pose2d(y_cmd)
 
-		init_time = time.time()
-		return init_time
+		return time.time()
 
 	def _set_action(self, action):
 		if action == 0:
@@ -169,7 +168,7 @@ class DroneGymGazeboEnv(gym.Env):
 		if action == 1:
 			rospy.loginfo("> LEFT")
 			# Move left at 1m/s for self.action_duration seconds
-			start = self.left_or_right(1, 1)#second 1 indicates move left (not right)
+			start = self.left_or_right(1, 1)#the second 1 indicates move left (not right)
 			while self.action_duration > time.time() - start:
 				pass
 
@@ -195,7 +194,7 @@ class DroneGymGazeboEnv(gym.Env):
 		cv_image_resized = cv2.resize(cv_image, (self.one_image_shape[2], self.one_image_shape[1]), interpolation = cv2.INTER_CUBIC)#36,48
 		cv_image_reshaped = cv_image_resized.reshape((self.one_image_shape[1], self.one_image_shape[2], self.one_image_shape[0]))#36,48,1
 
-		return cv_image_reshaped.transpose(2, 0, 1)#transpose to (channel,height,width) for pytorch (1,36,48)
+		return cv_image_reshaped.transpose(2, 0, 1)#transpose to the form (channel,height,width) for pytorch (1,36,48)
 
 	def _get_obs(self):
 		image = self.get_front_camera_depth_image_raw()
@@ -218,7 +217,7 @@ class DroneGymGazeboEnv(gym.Env):
 
 	def is_in_desired_position(self, current_position, epsilon=0.5):
 		"""
-		It return True if the current position is similar to the desired poistion
+		Return True if the current position is near desired poistion
 		"""
 
 		is_in_desired_pos = False
@@ -387,12 +386,10 @@ class DroneGymGazeboEnv(gym.Env):
 			self.pause_sim()
 
 		self.takeoff_drone()
-
 		self._init_env_variables()
 		self._update_episode()
-		obs = self._get_obs()
 
-		return obs
+		return self._get_obs()#return observation
 
 	def render(self, mode="human"):
 		image = self._get_obs()['image']
