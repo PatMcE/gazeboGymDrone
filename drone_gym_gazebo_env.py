@@ -98,8 +98,8 @@ class DroneGymGazeboEnv(gym.Env):
 		gt_pose = self.get_gt_pose()
 		self.previous_distance_from_des_point = self.get_distance_from_desired_point(gt_pose.pose.position)
 
-		self.prev_obs = np.zeros(self.one_image_shape, dtype=np.uint16)
-		self.prev_prev_obs = np.zeros(self.one_image_shape, dtype=np.uint16)
+		self.prev_obs = np.zeros(self.one_image_shape, dtype=np.float32)
+		self.prev_prev_obs = np.zeros(self.one_image_shape, dtype=np.float32)
 
 	def _check_front_camera_depth_image_raw_ready(self):
 		self.front_camera_depth_image_raw = None
@@ -168,17 +168,18 @@ class DroneGymGazeboEnv(gym.Env):
 
 		if action == 1:
 			rospy.loginfo("> LEFT")
-            # Move left at 1m/s for self.action_duration seconds
+			# Move left at 1m/s for self.action_duration seconds
 			start = self.left_or_right(1, 1)#second 1 indicates move left (not right)
 			while self.action_duration > time.time() - start:
 				pass
 
 		if action == 2:
 			rospy.loginfo("> RIGHT")
-            # Move right at 1m/s for self.action_duration seconds
+			# Move right at 1m/s for self.action_duration seconds
 			start = self.left_or_right(1, -1)#-1 indicates move right (not left)
 			while self.action_duration > time.time() - start:
 				pass
+	
 	def depth_imgmsg_to_cv2(self, img_msg):
 		try:
 			depth_im = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding='passthrough')
