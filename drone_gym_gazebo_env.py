@@ -98,8 +98,8 @@ class DroneGymGazeboEnv(gym.Env):
 		gt_pose = self.get_gt_pose()
 		self.previous_distance_from_des_point = self.get_distance_from_desired_point(gt_pose.pose.position)
 
-		self.prev_obs = np.zeros(self.one_image_shape, dtype=np.float32)
-		self.prev_prev_obs = np.zeros(self.one_image_shape, dtype=np.float32)
+		self.prev_image_obs = np.zeros(self.one_image_shape, dtype=np.float32)
+		self.prev_prev_image_obs = np.zeros(self.one_image_shape, dtype=np.float32)
 
 	def _check_front_camera_depth_image_raw_ready(self):
 		self.front_camera_depth_image_raw = None
@@ -198,22 +198,22 @@ class DroneGymGazeboEnv(gym.Env):
 
 	def _get_obs(self):
 		image = self.get_front_camera_depth_image_raw()
-		obs = self.preprocess_image(image)
+		image_obs = self.preprocess_image(image)
 		gt_pose = self.get_gt_pose()
 
-		combined_obs = np.concatenate((obs, self.prev_prev_obs), axis=0)
+		combined_image_obs = np.concatenate((image_obs, self.prev_prev_image_obs), axis=0)
 
-		obs_dict = {
-			'image': combined_obs,
+		obs = {
+			'image': combined_image_obs,
 			'xyz': [round(self.desired_point.x - gt_pose.pose.position.x, 2),
 			round(self.desired_point.y - gt_pose.pose.position.y, 2),
 			round(self.desired_point.z - gt_pose.pose.position.z, 2)]
 		}
 
-		self.prev_prev_obs = self.prev_obs
-		self.prev_obs = obs
+		self.prev_prev_image_obs = self.prev_image_obs
+		self.prev_image_obs = image_obs
 
-		return obs_dict
+		return obs
 
 	def is_in_desired_position(self, current_position, epsilon=0.5):
 		"""
