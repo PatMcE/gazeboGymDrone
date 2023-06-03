@@ -69,7 +69,6 @@ class DroneGymGazeboEnv(gym.Env):
 		self.cumulated_episode_reward = 0
 		self.unpause = rospy.ServiceProxy('/gazebo/unpause_physics', Empty)
 		self.pause = rospy.ServiceProxy('/gazebo/pause_physics', Empty)
-		self.reset_proxy = rospy.ServiceProxy('/gazebo/reset_world', Empty)
 		self.unpause_sim()
 		rospy.Subscriber("/camera/depth/image_raw", Image, self._front_camera_depth_image_raw_callback)                
 		rospy.Subscriber("/mavros/local_position/pose", PoseStamped, self._gt_pose_callback)
@@ -91,13 +90,6 @@ class DroneGymGazeboEnv(gym.Env):
 			self.pause()
 		except rospy.ServiceException as e:
 			print ("/gazebo/pause_physics service call failed")
-
-	def resetWorld(self):
-		rospy.wait_for_service('/gazebo/reset_world')
-		try:
-			self.reset_proxy()
-		except rospy.ServiceException as e:
-			print ("/gazebo/reset_world service call failed")
 
 	def _init_env_variables(self):
 		self.cumulated_steps = 0.0
