@@ -42,7 +42,7 @@ class DroneGymGazeboEnv(gym.Env):
 		self.width = 48 #width want image to be after processing (original image = 640)
 		self.one_image_shape = (1,self.height,self.width) #(channels, height, width)
 		self.two_image_shape = (2,self.height,self.width) #using two images (and relative position coordinates) in state space
-		self.image_observation_space = spaces.Box(low=0.0, high=1.0, shape=self.two_image_shape, dtype=np.float32)
+		self.image_observation_space = spaces.Box(low=0.0, high=255.0, shape=self.two_image_shape, dtype=np.float32)
 
         #Set starting and goal/desired point:
 		self.start_point = Point()
