@@ -11,7 +11,7 @@ from replay_memory import ReplayBuffer
 class Agent:
     def __init__(self, gamma, epsilon, lr, n_actions, image_input_dims,
                 mem_size, batch_size, eps_min=0.01, eps_dec=1e-4,
-                replace=1000, total_steps=20000, algo=None, env_name=None, fname=None, chkpt_dir='tmp/dqn'):
+                replace=1000, algo=None, env_name=None, fname=None, chkpt_dir='tmp/dqn'):
         self.gamma = gamma
         self.epsilon = epsilon
         self.lr = lr
@@ -22,7 +22,6 @@ class Agent:
         self.eps_min = eps_min
         self.eps_dec = eps_dec
         self.replace_target_count = replace
-        self.total_steps = total_steps
         self.algo = algo
         self.env_name = env_name
         self.fname = fname
@@ -73,10 +72,10 @@ class DQNAgent(Agent):
         super(DQNAgent, self).__init__(*args, **kwargs)
 
         self.q_eval = DQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                name=self.algo + '_1_lr' + str(self.lr) + '_bs' + str(self.batch_size) + '_gamma' + str(self.gamma) + '_steps' + str(self.total_steps) + '_q_eval',
+                                name=self.fname + '_q_eval',
                                 chkpt_dir=self.chkpt_dir)
         self.q_next = DQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                name=self.algo + '_1_lr' + str(self.lr) + '_bs' + str(self.batch_size) + '_gamma' + str(self.gamma) + '_steps' + str(self.total_steps) + '_q_next',
+                                name=self.fname + '_q_next',
                                 chkpt_dir=self.chkpt_dir)
 
     def choose_action(self, observation):
@@ -118,10 +117,10 @@ class DDQNAgent(Agent):
         super(DDQNAgent, self).__init__(*args, **kwargs)
 
         self.q_eval = DQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                name=self.algo + '_q_eval',
+                                name=self.fname + '_q_eval',
                                 chkpt_dir=self.chkpt_dir)
         self.q_next = DQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                name=self.algo + '_q_next',
+                                name=self.fname + '_q_next',
                                 chkpt_dir=self.chkpt_dir)
 
     def choose_action(self, observation):
@@ -163,10 +162,10 @@ class DuelingDQNAgent(Agent):
         super(DuelingDQNAgent, self).__init__(*args, **kwargs)
 
         self.q_eval = DuelingDQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                       name=self.algo + '_q_eval',
+                                       name=self.fname + '_q_eval',
                                        chkpt_dir=self.chkpt_dir)
         self.q_next = DuelingDQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                       name=self.algo + '_q_next',
+                                       name=self.fname + '_q_next',
                                        chkpt_dir=self.chkpt_dir)
 
     def choose_action(self, observation):
@@ -209,10 +208,10 @@ class DuelingDDQNAgent(Agent):
         super(DuelingDDQNAgent, self).__init__(*args, **kwargs)
 
         self.q_eval = DuelingDQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                       name=self.fname + '_q_eval_m10',
+                                       name=self.fname + '_q_eval',
                                        chkpt_dir=self.chkpt_dir)
         self.q_next = DuelingDQNetwork(self.image_input_dims, self.n_actions, self.lr,
-                                       name=self.fname + '_q_next_m10',
+                                       name=self.fname + '_q_next',
                                        chkpt_dir=self.chkpt_dir)
 
     def choose_action(self, observation):
