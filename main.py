@@ -27,11 +27,10 @@ if __name__ == '__main__':
     parser.add_argument('-max_mem', type=int, default=20000, help='Maximum size for memory replay buffer')    
     parser.add_argument('-bs', type=int, default=128, help='Batch size for replay memory sampling')    
     parser.add_argument('-eps_min', type=float, default=0.1, help='Minimum value for epsilon in epsilon-greedy action selection')
-    parser.add_argument('-eps_dec', type=float, default=0.5*1e-4, help='Linear factor for decreasing epsilon')#1e-4=0.0001,1e-5, 1e-4=0.0001,600 games
+    parser.add_argument('-eps_dec', type=float, default=0.5*1e-4, help='Linear factor for decreasing epsilon')
     parser.add_argument('-replace', type=int, default=1000, help='Interval for replacing target network')
     parser.add_argument('-algo', type=str, default='DuelingDDQNAgent', choices=['DQNAgent', 'DDQNAgent', 'DuelingDQNAgent', 'DuelingDDQNAgent'])  
-    parser.add_argument('-n_games', type=int, default=2500)#800
-    parser.add_argument('-total_steps', type=int, default=60)#20000)    
+    parser.add_argument('-n_games', type=int, default=2500)
     parser.add_argument('-render', type=bool, default=False)
     ############### Change the bellow 2 lines to match your system ###############
     parser.add_argument('-root', type=str, default='/home/patmc/catkin_ws/src/mavros-px4-vehicle/', help='root path for saving/loading')    
@@ -67,7 +66,6 @@ if __name__ == '__main__':
                    eps_min=args.eps_min,
                    eps_dec=args.eps_dec,#1e-4,600 games
                    replace=args.replace,
-                   total_steps=args.total_steps,
                    algo=args.algo,
                    env_name=env_name,
                    fname = fname,
