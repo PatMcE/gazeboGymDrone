@@ -285,7 +285,7 @@ class DroneGymGazeboEnv(gym.Env):
 
 		is_inside_workspace_now = self.is_inside_workspace(current_position)
 		has_drone_collided = self.drone_has_collided(roll, pitch, yaw)
-		has_reached_des_point = self.is_in_desired_position(current_position, 0.5)
+		has_reached_des_point = self.is_in_desired_position(current_position)#default epsilon=0.5
 
 		if (has_drone_collided):
 			rospy.logwarn("drone has collided")
