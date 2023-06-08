@@ -42,7 +42,7 @@ class DroneGymGazeboEnv(gym.Env):
 		self.width = 48 #width want image to be after processing (original image = 640)
 		self.one_image_shape = (1,self.height,self.width) #(channels, height, width)
 		self.two_image_shape = (2,self.height,self.width) #two depth images (and relative position coordinates) is the observation space
-		self.image_observation_space = spaces.Box(low=0.0, high=255.0, shape=self.two_image_shape, dtype=np.uint16)
+		self.image_observation_space = spaces.Box(low=0.0, high=255.0, shape=self.two_image_shape, dtype=np.uint8)
 
         #Set starting and goal/desired point:
 		self.start_point = Point()
@@ -98,8 +98,8 @@ class DroneGymGazeboEnv(gym.Env):
 		gt_pose = self.get_gt_pose()
 		self.previous_distance_from_des_point = self.get_distance_from_desired_point(gt_pose.pose.position)
 
-		self.prev_image_obs = np.zeros(self.one_image_shape, dtype=np.uint16)
-		self.prev_prev_image_obs = np.zeros(self.one_image_shape, dtype=np.uint16)
+		self.prev_image_obs = np.zeros(self.one_image_shape, dtype=np.uint8)
+		self.prev_prev_image_obs = np.zeros(self.one_image_shape, dtype=np.uint8)
 
 	def _check_front_camera_depth_image_raw_ready(self):
 		self.front_camera_depth_image_raw = None
@@ -181,7 +181,7 @@ class DroneGymGazeboEnv(gym.Env):
 	
 	def depth_imgmsg_to_cv2(self, img_msg):
 		try:
-			depth_im = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding='passthrough')
+			depth_im = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding='8UC1')
 		except CvBridgeError as e:
 			print(e)
 		return depth_im
@@ -191,7 +191,7 @@ class DroneGymGazeboEnv(gym.Env):
 		cv_image = self.depth_imgmsg_to_cv2(image)#480,640
 
 		#Normalize, resize and reshape:
-		cv_image_normalized = cv2.normalize(cv_image, None, 0.0, 255.0)
+		cv_image_normalized = cv2.normalize(cv_image, None, 0.0, 255.0, cv2.NORM_MINMAX)
 		cv_image_resized = cv2.resize(cv_image_normalized, (self.one_image_shape[2], self.one_image_shape[1]), interpolation = cv2.INTER_CUBIC)#36,48
 		cv_image_reshaped = cv_image_resized.reshape((self.one_image_shape[1], self.one_image_shape[2], self.one_image_shape[0]))#36,48,1
 
