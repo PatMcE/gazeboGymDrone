@@ -267,9 +267,9 @@ class DroneGymGazeboEnv(gym.Env):
 		"""
 		has_collided = True
 
-		self.max_roll = 0.3
-		self.max_pitch = 0.3
-		self.max_yaw = 0.15
+		self.max_roll = 0.25
+		self.max_pitch = 0.25
+		self.max_yaw = 0.125
 
 		if roll > -1*self.max_roll and roll <= self.max_roll:
 			if pitch > -1*self.max_pitch and pitch <= self.max_pitch:
