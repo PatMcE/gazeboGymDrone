@@ -361,8 +361,8 @@ class DroneGymGazeboEnv(gym.Env):
 			z = round(gt_pose.pose.position.z, 2)
 
 			self.unpause_sim()
-			rospy.loginfo("Send to x-0.15, y, z")
-			cmd = SetPositionWithYawCmdBuilder.build(x=x-1.0, y=y, z=z)
+			rospy.loginfo("Send to x-0.2, y, z")
+			cmd = SetPositionWithYawCmdBuilder.build(x=x-0.2, y=y, z=z)
 			self.drone.set_pose2d(cmd)
 			rospy.sleep(10)
 
