@@ -64,10 +64,10 @@ pip3 install --user jinja2
 
 cd ~/catkin_ws/src/ifo_gazebo/PX4-Autopilot
 make px4_sitl gazebo
-#if gazebo black screen then cntrl+c and run make command again
+#if gazebo black screen then ctrl+c and run make command again
 ```
 ```
-#cntrl+c
+#ctrl+c
 cd ~/catkin_ws/src/ifo_gazebo
 rm -r real*
 git clone https://github.com/pal-robotics/realsense_gazebo_plugin.git
@@ -158,7 +158,7 @@ source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
 ```
 ### Step 10 - Close all tabs, re-launch world and start playing/evaluating
-#### Step 10a - Close all tabs
+#### Step 10a - Close all tabs but before closing each tab press ctrl+c
 #### Step 10b - Run the bellow commands
 ```
 cd ~
