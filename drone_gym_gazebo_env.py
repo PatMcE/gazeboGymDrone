@@ -281,7 +281,7 @@ class DroneGymGazeboEnv(gym.Env):
 
 		self.max_roll = 0.25
 		self.max_pitch = 0.25
-		self.max_yaw = 0.125
+		self.max_yaw = 0.1
 
 		if roll > -1*self.max_roll and roll <= self.max_roll:
 			if pitch > -1*self.max_pitch and pitch <= self.max_pitch:
@@ -373,8 +373,8 @@ class DroneGymGazeboEnv(gym.Env):
 			z = round(gt_pose.pose.position.z, 2)
 
 			self.unpause_sim()
-			rospy.loginfo("Send to x-0.5, y, z")
-			cmd = SetPositionWithYawCmdBuilder.build(x=x-0.5, y=y, z=z)
+			rospy.loginfo("Send to x-0.6, y, z")
+			cmd = SetPositionWithYawCmdBuilder.build(x=x-0.6, y=y, z=z)
 			self.drone.set_pose2d(cmd)
 			rospy.sleep(10)
 
