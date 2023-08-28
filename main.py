@@ -25,7 +25,7 @@ if __name__ == '__main__':
     parser.add_argument('-epsilon', type=float, default=1, help='What epsilon starts at')    
     parser.add_argument('-lr', type=float, default=1e-4, help='Learning rate')
     parser.add_argument('-max_mem', type=int, default=20000, help='Maximum size for memory replay buffer')    
-    parser.add_argument('-bs', type=int, default=128, help='Batch size for replay memory sampling')    
+    parser.add_argument('-bs', type=int, default=32, help='Batch size for replay memory sampling')    
     parser.add_argument('-eps_min', type=float, default=0.1, help='Minimum value for epsilon in epsilon-greedy action selection')
     parser.add_argument('-eps_dec', type=float, default=0.5*1e-4, help='Linear factor for decreasing epsilon')
     parser.add_argument('-replace', type=int, default=1000, help='Interval for replacing target network')
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     env = gym.make(env_name)
 
     # Setup files/arrays for saving/loading:
-    fname = args.algo + '_env3A'
+    fname = args.algo + '_env1A'
     if args.train:
         scores_file = args.root + 'scores/' + fname + '_scores.npy'
         steps_file = args.root + 'scores/' + fname + '_steps.npy'
