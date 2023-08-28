@@ -147,12 +147,13 @@ touch {world1,world2}.world
 ### Step 9 - Launch world and start training
 #### Step 9a - Run the bellow commands
 ```
-cd ~/catkin_ws
+cd ~
 source ~/.bashrc
 roslaunch ifo_gazebo ifo_empty_world_1.launch
 ```
 #### Step 9b - Open another terminal tab and run the bellow commands
 ```
+cd ~/catkin_ws
 source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
 ```
