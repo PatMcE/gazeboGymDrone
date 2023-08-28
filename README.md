@@ -157,7 +157,7 @@ cd ~/catkin_ws
 source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
 ```
-### Step 10 - Close all tabs, re-launch world and start playing/evaluating
+### Step 10 - When training finishes close all tabs, re-launch world and start playing/evaluating
 #### Step 10a - Close all tabs but before closing each tab press ctrl+c
 #### Step 10b - Run the bellow commands
 ```
