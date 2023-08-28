@@ -67,6 +67,9 @@ class DroneGymGazeboEnv(gym.Env):
 		self.seed()
 		self.episode_num = 0
 		self.cumulated_episode_reward = 0
+		self.has_drone_exceeded_workspace = False
+		self.has_drone_collided = False
+		self.has_reached_des_point = False
 		self.unpause = rospy.ServiceProxy('/gazebo/unpause_physics', Empty)
 		self.pause = rospy.ServiceProxy('/gazebo/pause_physics', Empty)
 		self.unpause_sim()
@@ -136,6 +139,15 @@ class DroneGymGazeboEnv(gym.Env):
 
 	def get_gt_pose(self):
 		return self.gt_pose
+
+	def get_has_drone_exceeded_workspace(self):
+		return self.has_drone_exceeded_workspace
+
+	def get_has_drone_collided(self):
+		return self.has_drone_collided
+
+	def get_has_reached_des_point(self):
+		return self.has_reached_des_point
 
 	def forward(self, speed):
 		gt_pose = self.get_gt_pose()        
@@ -290,13 +302,13 @@ class DroneGymGazeboEnv(gym.Env):
 		gt_pose = self.get_gt_pose()
 		roll, pitch, yaw = self.euler_from_quaternion(gt_pose.pose.orientation.x, gt_pose.pose.orientation.y, gt_pose.pose.orientation.z, gt_pose.pose.orientation.w)
 
-		is_inside_workspace_now = self.is_inside_workspace(current_position)
-		has_drone_collided = self.drone_has_collided(roll, pitch, yaw)
-		has_reached_des_point = self.is_in_desired_position(current_position)#default epsilon = 0.5
+		self.has_drone_exceeded_workspace = not(self.is_inside_workspace(current_position))
+		self.has_drone_collided = self.drone_has_collided(roll, pitch, yaw)
+		self.has_reached_des_point = self.is_in_desired_position(current_position)
 
-		episode_done = not(is_inside_workspace_now) or has_drone_collided or has_reached_des_point
+		episode_done = self.has_drone_exceeded_workspace or self.has_drone_collided or self.has_reached_des_point
 
-		return episode_done	
+		return episode_done
 
 	def _compute_reward(self, observations, episode_done):
 		current_position = Point()
