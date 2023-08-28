@@ -7,7 +7,6 @@ from networks import DQNetwork, DuelingDQNetwork
 import torch as T
 from replay_memory import ReplayBuffer
 
-
 class Agent:
     def __init__(self, gamma, epsilon, lr, n_actions, image_input_dims,
                 mem_size, batch_size, eps_min=0.01, eps_dec=1e-4,
