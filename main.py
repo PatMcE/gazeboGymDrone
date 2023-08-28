@@ -19,7 +19,7 @@ import torch
 if __name__ == '__main__':
     # Allow the following arguments to be passed:
     parser = argparse.ArgumentParser(description = 'Drone StableBaselines')
-    parser.add_argument('-train', type=int, default=1, help='True = training, False = playing')
+    parser.add_argument('-train', type=int, default=1, help='1 = training, 0 = playing')
     parser.add_argument('-load_checkpoint', type=int, default=0, help='Load a model checkpoint, set to 1 when playing')
     parser.add_argument('-gamma', type=float, default=0.99, help='Discount factor for update equation.')    
     parser.add_argument('-epsilon', type=float, default=1, help='What epsilon starts at')    
