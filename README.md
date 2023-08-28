@@ -157,3 +157,17 @@ cd ~/catkin_ws
 source ~/.bashrc
 rosrun mavros_px4_vehicle main.py
 ```
+### Step 10 - Close all tabs, re-launch world and start playing/evaluating
+#### Step 10a - Close all tabs
+#### Step 10b - Run the bellow commands
+```
+cd ~
+source ~/.bashrc
+roslaunch ifo_gazebo ifo_empty_world_1.launch
+```
+#### Step 10c - Open another terminal tab and run the bellow commands
+```
+cd ~/catkin_ws
+source ~/.bashrc
+rosrun mavros_px4_vehicle main.py -train 0 -load_checkpoint 1
+```
