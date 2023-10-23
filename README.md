@@ -144,7 +144,7 @@ cd ~/catkin_ws/src/mavros-px4-vehicle/worlds
 touch {world1,world2}.world
 ```
 ##### Step 8diii - Copy and paste the contents of 'world1.world' and 'world2.world' in this repo into the files with the same name on your computer with Sublime Text (and save)
-### Step 9 - Launch world and start training
+### Step 9 - Launch world and start training (you may have to restart machine before this step)
 #### Step 9a - Run the bellow commands
 ```
 cd ~
