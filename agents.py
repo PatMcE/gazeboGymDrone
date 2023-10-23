@@ -45,7 +45,7 @@ class Agent:
         rewards = T.tensor(reward).to(self.q_eval.device)
         image_states_ = T.tensor(new_image_state).to(self.q_eval.device)
         xyz_states_ = T.tensor(new_xyz_state).to(self.q_eval.device)
-        dones = T.tensor(done).to(self.q_eval.device)
+        dones = T.tensor(done, dtype=T.bool).to(self.q_eval.device)
 
         return image_states, xyz_states, actions, rewards, image_states_, xyz_states_, dones
 
